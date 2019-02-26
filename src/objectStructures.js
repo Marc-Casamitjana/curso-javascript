@@ -1,10 +1,20 @@
+
 const foo = { x: 1, y: 2 }
 const fooArr = [1, 2, 3, 4, 5];
+// const arr = [1,2,3,4]
+
 function at(obj, prop) {
     return obj[prop];
 }
 
+function set(arr, index, value){
+    arr[index] = value;
+}
 // console.log(at(foo, 'x'));
+
+// set(arr, 4, 'hola');
+// console.log(arr);
+// at(arr, 4);
 
 function keys(obj){
     var keys = [];
@@ -29,9 +39,19 @@ function foreach(obj, fn){
 // })
 
 module.exports = {
-    at: at
+    at,
+    keys
 }
 
 
+// var obj1 = { }
 
-console.log(at(foo, 'y'))
+// var obj = { x : 3, y : 4, z : 5};
+
+// delete obj[z];
+// console.log(obj);
+
+var arr = [1,2,3,4,5];
+
+arr.splice(2,3);
+console.log(arr);

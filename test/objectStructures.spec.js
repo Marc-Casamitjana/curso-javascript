@@ -10,4 +10,10 @@ describe('objectStructures.js', function () {
             expect(objectStructures.at(object, 'x')).to.be(1)
         });
     });
+    describe('keys', function () {
+        it('should return an array with object keys', function () {
+            expect(typeof objectStructures.keys).to.be('function');
+            expect(objectStructures.keys(object)).to.eql(['x','y'])
+        });
+    });
 });
