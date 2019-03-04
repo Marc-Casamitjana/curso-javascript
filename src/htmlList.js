@@ -1,26 +1,48 @@
 var list = {
-    type: 'ul',
-    value: [
-        { type: 'li', value: 'foo' },
-        { type: 'li', value: [
-            { type: 'li', value: 'baz'}
-        ] },
+    tag: 'ul', children: [
+        { tag: 'li', children: ['foo'] },
+        { tag: 'li', children: ['bar'] },
+        {
+            tag: 'li', children: ['qux',
+                {
+                    tag: 'ol', children: [
+                        { tag: 'li', children: ['foo'] },
+                        { tag: 'li', children: ['bar'] },
+                        { tag: 'li', children: ['qux'] },
+                    ]
+                }
+            ]
+        }
     ]
-}
+};
 
 function buildList(list) {
-    let result='';
-    if (Array.isArray(list.value)) {
-        list.value.forEach(function (e) {
-            if (e.type === 'li') {
-                result += '<li>' + e.value + '</li>'
-            }else{
-                buildList(e);
-            }
-        });
-            return '<ul>'+result+'</ul>';
-    }
-    return list;
+    list.children = list.children.map(e => {
+        if (isStr(e)) {
+            return tag(e);
+        } else {
+            return buildList(e);
+        }
+    });
+    return `<${list.tag}>${list.children.join('')}</${list.tag}>`;
 }
+
+function tag(itemList) {
+    if (itemList.children) {
+        return `<${itemList.tag}>${itemList.children[0]}</${itemList.tag}>`;
+    } else {
+        return itemList;
+    }
+}
+
+
+function isStr(element) {
+    if (typeof element === 'string' | element.children === 'string') {
+        return true;
+    } else {
+        return element.children.length === 1;
+    }
+}
+
 
 console.log(buildList(list));
